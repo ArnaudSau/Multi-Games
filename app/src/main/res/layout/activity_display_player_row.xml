@@ -6,6 +6,7 @@
     android:background="@drawable/square_corner"
     android:gravity="center"
     android:orientation="horizontal"
+    android:id="@+id/player_row_container"
     android:padding="20dp">
     <ImageView
         android:id="@+id/player_row_image"

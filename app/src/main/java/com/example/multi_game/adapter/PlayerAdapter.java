@@ -4,19 +4,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.multi_game.R;
+import com.example.multi_game.activity.CreatePlayerActivity;
+import com.example.multi_game.activity.DisplayPlayerActivity;
+import com.example.multi_game.activity.MainActivity;
+import com.example.multi_game.manager.PlayerManager;
 import com.example.multi_game.model.Player;
+import com.example.multi_game.utils.ActivityUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHolder> {
     private List<Player> players;
-    public PlayerAdapter(List<Player> players) {
+    private final DisplayPlayerActivity activity;
+    public PlayerAdapter(DisplayPlayerActivity activity, List<Player> players) {
         this.players = players;
+        this.activity = activity;
     }
     @NonNull
     @Override
@@ -30,6 +39,16 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
         Player player = players.get(position);
         holder.firstName.setText(player.getFirstName());
         holder.lastName.setText(player.getName());
+        Picasso.get().load(player.getPicture()).centerCrop().fit().into(holder.imageView);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerManager.getInstance().setPlayer(player);
+                ActivityUtils.launchActivity(activity, MainActivity.class,false, true);
+                activity.finishAffinity();
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -37,11 +56,13 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
     }
     class PlayerHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
+        public LinearLayout container;
         public TextView firstName;
         public TextView lastName;
         PlayerHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.player_row_image);
+            container = itemView.findViewById(R.id.player_row_container);
             lastName = itemView.findViewById(R.id.player_row_name);
             firstName = itemView.findViewById(R.id.player_row_firstname);
         }

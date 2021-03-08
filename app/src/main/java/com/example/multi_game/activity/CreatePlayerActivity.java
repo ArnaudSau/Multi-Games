@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.multi_game.R;
 import com.example.multi_game.dao.AppDatabase;
 import com.example.multi_game.databinding.ActivityCreatePlayerBinding;
+import com.example.multi_game.manager.PlayerManager;
 import com.example.multi_game.model.Player;
 import com.example.multi_game.utils.ActivityUtils;
 import com.google.android.gms.location.LocationServices;
@@ -73,8 +74,10 @@ public class CreatePlayerActivity extends AppCompatActivity {
                             Integer.parseInt(binding.createPlayerAge.getText().toString()),
                             binding.createPlayerLocalisation.getText().toString(),
                             pictureUrl);
-
                     AppDatabase.getDatabase(getApplicationContext()).appDao().insert(player);
+                    PlayerManager.getInstance().setPlayer(player);
+                    ActivityUtils.launchActivity(CreatePlayerActivity.this, MainActivity.class,true, true);
+                    //PlayerManager.getInstance().getPlayer();
                 }else{
                     Toast.makeText(CreatePlayerActivity.this,"Informations manquantes",Toast.LENGTH_LONG).show();
                 }

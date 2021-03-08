@@ -2,7 +2,10 @@ package com.example.multi_game.utils;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.multi_game.R;
 import com.example.multi_game.activity.CreatePlayerActivity;
@@ -26,6 +29,22 @@ public class ActivityUtils {
         if (isFinish) {
             activity.finish();
         }
+    }
+
+    public static void addFragmentToActivity(AppCompatActivity activity, Fragment fragment, int frameId) {
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.replace(frameId, fragment, "tag");
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public static void addFragmentToActivity(Fragment parentFragment, Fragment fragment, int frameId) {
+        FragmentTransaction transaction = parentFragment.getChildFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.replace(frameId, fragment, "tag");
+        //transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
