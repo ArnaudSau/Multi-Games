@@ -15,4 +15,9 @@
     <string name="settings">Settings</string>
     <string name="ipac">Ipac</string>
     <string name="swipe">Swipe</string>
+
+    <string name="commencer">commencer !</string>
+
+    <string name="time_left">temps restant : %d secondes</string>
+    <string name="score">score : %d</string>
 </resources>

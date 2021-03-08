@@ -43,7 +43,7 @@ public class ActivityUtils {
         FragmentTransaction transaction = parentFragment.getChildFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.replace(frameId, fragment, "tag");
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
